@@ -9,6 +9,14 @@ export const clearResults = () => {
     elements.searchResList.innerHTML = '';
     elements.searchResPages.innerHTML = '';
 };
+export const highlightSelected = id => {
+    const resultArr = Array.from(document.querySelectorAll('.results__link'));
+
+    resultArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+    document.querySelector(`.results__link[href*="#${id}"]`).classList.add('results__link--active');
+}
 /*
 // 'Pasta with tomato and spinach'
 acc: 0 / acc + cur.length = 5 / newTitle = ['Pasta']
@@ -17,7 +25,7 @@ acc: 9 / acc + cur.length = 15 / newTitle = ['Pasta', 'with', 'tomato']
 acc: 15 / acc + cur.length = 18 / newTitle = ['Pasta', 'with', 'tomato']
 acc: 18 / acc + cur.length = 24 / newTitle = ['Pasta', 'with', 'tomato']
 */
-const limitRecipeTitle = (title,limit = 17) => {
+export const limitRecipeTitle = (title,limit = 17) => {
     const newTitle=[];
     if(title.length > limit){
         title.split(' ').reduce((acc,cur) => {
@@ -34,7 +42,7 @@ const limitRecipeTitle = (title,limit = 17) => {
 const renderRecipe = recipe => {
     const markup = `
         <li>
-            <a class="results__link" href="#${recipe.recipe_id}">
+            <a class="results__link .results__link--active" href="#${recipe.recipe_id}">
                 <figure class="results__fig">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                 </figure>
